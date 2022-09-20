@@ -23,9 +23,15 @@
 {% block content %}
     <div class="card mt-3">
         <div class="card-body text-center">
+            <span id="article-{{ article.id }}">Лайки: {{ article.likes.count }}</span>
             <h5 class="card-title">{{ article.upper }}</h5>
             <h6 class="card-subtitle mb-2 text-muted">Автор: {{ article.author }}</h6>
             <p class="card-text">{{ article.content }}</p>
+            {% if request.user.is_authenticated %}
+                <a data-article-id="article-{{ article.id }}" class="likes" href="{% url 'webapp:likes' article.pk %}">
+                    {% if request.user in article.likes.all %}Дизлайк{% else %} Лайк {% endif %}
+                </a>
+            {% endif %}
         </div>
     </div>
     <h3 class="my-3 text-center">Комментарии</h3>
@@ -40,16 +46,23 @@
                         <a class="btn btn-danger" href="{% url "webapp:update_comment" comment.pk %}">Изменить</a>
                         <a class="btn btn-warning" href="{% url "webapp:delete_comment" comment.pk %}">Удалить</a>
                     </div>
+                    {% if request.user.is_authenticated %}
+                        <a data-comment-id="comment-{{ comment.id }}" class="commentlikes"
+                           href="{% url 'webapp:commentlikes' comment.pk %}">
+                            {% if request.user in comment.commentlikes.all %}Дизлайк{% else %} Лайк {% endif %}
+                        </a>
+                    {% endif %}
+                    <span id="comment-{{ comment.id }}">Лайки: {{ comment.commentlikes.count }}</span>
                 </div>
             </div>
-        {% empty %}
+            {% empty %}
             <p>Комментариев нет</p>
         {% endfor %}
     </div>
     <h3>Теги</h3>
     {% for tag in article.tags.all %}
         <p>{{ tag.name }}</p>
-    {% empty %}
+        {% empty %}
         <p>Тэгов нет</p>
     {% endfor %}
     <a href="{% url "webapp:index" %}">На главную</a>
