@@ -21,7 +21,7 @@ class Article(BaseModel):
     tags = models.ManyToManyField("webapp.Tag", related_name="articles", blank=True)
     author = models.ForeignKey(get_user_model(), related_name="articles", verbose_name="Автор", default=1,
                                on_delete=models.SET_DEFAULT)
-    likes = models.ManyToManyField(get_user_model(), related_name="likes", blank=True, null=True)
+    likes = models.ManyToManyField(get_user_model(), related_name="likes", blank=True)
 
     def __str__(self):
         return f"{self.id}. {self.title}: {self.author.username}"
@@ -47,7 +47,7 @@ class Comment(BaseModel):
                                on_delete=models.SET_DEFAULT)
     article = models.ForeignKey("webapp.Article", on_delete=models.CASCADE, related_name="comments",
                                 verbose_name="Статья")
-    commentlikes = models.ManyToManyField(get_user_model(), related_name="commentlikes", blank=True, null=True)
+    commentlikes = models.ManyToManyField(get_user_model(), related_name="commentlikes", blank=True)
 
 
     def __str__(self):
