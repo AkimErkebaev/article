@@ -2,7 +2,7 @@ from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMix
 from django.contrib.auth.models import Permission
 from django.db.models import Q
 from django.http import JsonResponse
-from django.shortcuts import redirect, get_object_or_404
+from django.shortcuts import redirect, get_object_or_404, render
 from django.urls import reverse_lazy
 
 # Create your views here.
@@ -119,3 +119,7 @@ class LikesView(LoginRequiredMixin, View):
             article.likes.add(user)
 
         return JsonResponse({"count": article.likes.count()})
+
+
+def indexxx_view(request):
+    return render(request, "articles/indexxx.html")

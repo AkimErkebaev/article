@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+{% block content %}
+    <div id="container">
+        <h5>Введите число первое</h5>
+        <input name="name1" id="first" type="number">
+        <h5>Введите число второе</h5>
+        <input name="name2" id="second" type="number">
+        <div>
+            <a class="add" href="{% url "api_v1:add" %}">Плюс</a>
+            <a class="subtract" href="{% url "api_v1:subtract" %}">Минус</a>
+            <a class="multiply" href="{% url "api_v1:multiply" %}">Умножить</a>
+            <a class="divide" href="{% url "api_v1:divide" %}">Делить</a>
+        </div>
+        <div id="result">
+
+        </div>
+    </div>
+{% endblock %}
